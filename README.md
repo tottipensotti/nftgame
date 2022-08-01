@@ -1,15 +1,11 @@
-# Basic Sample Hardhat Project
+# Buildspace NFT Game tutorial
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+This project is a tutorial from Buildspace in which we are building a NFT game.
+Technology used in this project:
+- Hardhat
+- Oppen Zeppelin
+- Ethers.js
+- Waffle
+- React     
 
-Try running some of the following tasks:
-
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
-```
+In this project we are going to: build an NFT character, create the game logic, create the web app and finally connect our web3 wallet and deploying the game in Ethereum's testnet blockchain.
