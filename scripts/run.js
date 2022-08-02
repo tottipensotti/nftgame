@@ -1,6 +1,15 @@
 const main = async () => {
     const gameContractFactory = await hre.ethers.getContractFactory('TheGame');
-    const gameContract = await gameContractFactory.deploy();
+    const gameContract = await gameContractFactory.deploy(
+        [], // names
+        [], // images
+        [], // health
+        [], // attack pts
+        [] // defense pts
+
+
+
+    );
     await gameContract.deployed();
     console.log("Contract deployed to:", gameContract.address);
 };
