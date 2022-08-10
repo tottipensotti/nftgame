@@ -6,7 +6,12 @@ const main = async () => {
             'https://imgur.com/TAz2BnA', 'https://imgur.com/h9pgPOP'], // images
         [400, 250, 600, 450], // health
         [300, 200, 600, 550 ], // attack pts
-        [300, 200, 400, 350] // defense pts
+        [300, 200, 400, 350], // defense pts
+        "Dragon",
+        "https://i.imgur.com/63VSlxL.jpeg",
+        10000,
+        50,
+        100
     );
     await gameContract.deployed();
     console.log("Contract deployed to:", gameContract.address);
