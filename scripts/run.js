@@ -4,14 +4,14 @@ const main = async () => {
         ['Batman', 'Spiderman' , 'Thor', 'Ironman'], // names
         ['https://imgur.com/6u2u5Zb', 'https://imgur.com/5rxXE1h',
             'https://imgur.com/TAz2BnA', 'https://imgur.com/h9pgPOP'], // images
-        [400, 250, 600, 450], // health
-        [300, 200, 600, 550 ], // attack pts
-        [300, 200, 400, 350], // defense pts
+        [400, 300, 600, 450], // health
+        [45, 45, 60, 100 ], // attack pts
+        [30, 20, 40, 50], // defense pts
         "Dragon",
         "https://i.imgur.com/63VSlxL.jpeg",
         10000,
-        50,
-        100
+        60,
+        40
     );
     await gameContract.deployed();
     console.log("Contract deployed to:", gameContract.address);
@@ -19,6 +19,12 @@ const main = async () => {
     // mint the NFT!
     let txn;
     txn = await gameContract.mintCharacterNFT(3);
+    await txn.wait();
+
+    txn = await gameContract.attackBoss();
+    await txn.wait();
+
+    txn = await gameContract.attackBoss();
     await txn.wait();
     
     // TokenURI is a function inherited from ERC721 that returns the data attached to the NFT
