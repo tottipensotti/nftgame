@@ -179,6 +179,8 @@ contract TheGame is ERC721 {
 
             console.log("Player attacked. New boss hp: %s", bigBoss.hp);
             console.log("%s attacked. New player hp: %s", bigBoss.name, player.hp);
+
+            emit AttackComplete(msg.sender, bigBoss.hp, player.hp);
         }
 
         function checkNFT() public view returns (CharacterAttributes memory) {
