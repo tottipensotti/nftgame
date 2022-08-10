@@ -3,7 +3,7 @@
 This project is a tutorial from Buildspace in which we are building a NFT game.
 Technology used in this project:
 - Hardhat
-- Oppen Zeppelin
+- Open Zeppelin
 - Ethers.js
 - Waffle
 - React     
