@@ -39,10 +39,28 @@ contract TheGame is ERC721 {
             string[] memory characterImageURIs,
             uint[] memory characterHp,
             uint[] memory characterAttackDmg,
-            uint[] memory characterDefensePts
+            uint[] memory characterDefensePts,
+            string memory bossName,
+            string memory bossImageURI,
+            uint bossHp,
+            uint bossAttackDamage,
+            uint bossDefensePoints
         ) 
             ERC721("Heroes", "HERO")
-        {
+        {   
+
+            bigBoss = BigBoss({
+                name: bossName,
+                imageURI: bossImageURI,
+                hp: bossHp,
+                maxHp: bossHp,
+                attackDamage: bossAttackDamage,
+                defensePoints: bossDefensePoints
+            });
+
+            console.log("Done initializing boss %s w/ HP %s, img %s", bigBoss.name, bigBoss.hp, bigBoss.imageURI);
+
+
             for (uint i = 0; i < characterNames.length; i += 1) {
                 defaultCharacters.push(CharacterAttributes({
                     characterIndex: i,
@@ -86,6 +104,16 @@ contract TheGame is ERC721 {
 
             _tokenIds.increment();
         }
+
+        struct BigBoss {
+                string name;
+                string imageURI;
+                uint hp;
+                uint maxHp;
+                uint attackDamage;
+                uint defensePoints;
+            }
+            BigBoss public bigBoss;
 
         function tokenURI(uint256 _tokenId) public view override returns (string memory) {
             // Retrieve the NFT data
