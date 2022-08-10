@@ -33,6 +33,9 @@ contract TheGame is ERC721 {
         // mapping NFT's Id - Attributes (struct) and NFT's Id - Address
         mapping(uint256 => CharacterAttributes) public nftHolderAttributes;
         mapping(address => uint256) public nftHolders;
+        
+        event CharacterNFTMinted(address sender, uint256 tokenId, uint256 characterIndex);
+        event AttackComplete(address sender, uint newBossHp, uint newPlayerHp);
 
         constructor (
             string[] memory characterNames,
@@ -103,6 +106,7 @@ contract TheGame is ERC721 {
             nftHolders[msg.sender] = newItemId;
 
             _tokenIds.increment();
+            emit CharacterNFTMinted(msg.sender, newItemId, _characterIndex);
         }
 
         struct BigBoss {
@@ -142,5 +146,58 @@ contract TheGame is ERC721 {
             );
 
             return output;
+        }
+
+        function attackBoss() public {
+            // player's NFT state
+            uint256 nftId = nftHolders[msg.sender];
+            CharacterAttributes storage player = nftHolderAttributes[nftId];
+            
+            console.log("\nPlayer w/ character %s attacking. Has %s HP and %s AD", player.name, player.hp, player.attackDamage);
+            console.log("Boss %s has %s HP and %s AD", bigBoss.name, bigBoss.hp, bigBoss.attackDamage);
+
+            // It's alive? Hp > 0
+            require (
+                player.hp > 0, "You can't attack. Your character is dead!"
+            );
+            // Boss is alive? Hp > 0
+            require (
+                bigBoss.hp > 0, "You've already defeated this boss!"
+            );
+            // Player attacks
+            if (bigBoss.hp < player.attackDamage) {
+                bigBoss.hp = 0;
+            } else {
+                bigBoss.hp = bigBoss.hp - (player.attackDamage - bigBoss.defensePoints);
+            }
+            // Boss attacks
+            if (player.hp < bigBoss.attackDamage) {
+                player.hp = 0;
+            } else {
+                player.hp = player.hp - (bigBoss.attackDamage - player.defensePoints);
+            }
+
+            console.log("Player attacked. New boss hp: %s", bigBoss.hp);
+            console.log("%s attacked. New player hp: %s", bigBoss.name, player.hp);
+        }
+
+        function checkNFT() public view returns (CharacterAttributes memory) {
+            uint256 NftId = nftHolders[msg.sender];
+            if (NftId > 0) {
+                return nftHolderAttributes[NftId];
+            }
+
+            else {
+                CharacterAttributes memory emptyStruct;
+                return emptyStruct;
+            }
+        }
+
+        function getAllDefaultCharacters() public view returns (CharacterAttributes[] memory) {
+            return defaultCharacters;
+        }
+
+        function getBigBoss() public view returns (BigBoss memory) {
+            return bigBoss;
         }
     }
